@@ -1,0 +1,290 @@
+{
+  "entity": {
+    "sensor": {
+      "container_remaining": {
+        "default": "mdi:bottle-tonic-outline"
+      },
+      "container_level": {
+        "default": "mdi:cup-water"
+      },
+      "remaining_days": {
+        "default": "mdi:calendar-clock"
+      },
+      "dosed_today": {
+        "default": "mdi:water-check"
+      },
+      "planned_today": {
+        "default": "mdi:water-plus-outline"
+      },
+      "total_dosed": {
+        "default": "mdi:counter"
+      },
+      "next_dose": {
+        "default": "mdi:clock-start"
+      },
+      "next_dose_amount": {
+        "default": "mdi:eyedropper"
+      },
+      "activity": {
+        "default": "mdi:pump",
+        "state": {
+          "idle": "mdi:pump-off",
+          "dosing": "mdi:pump",
+          "priming": "mdi:water-sync",
+          "calibrating": "mdi:beaker-check"
+        }
+      },
+      "dose_progress": {
+        "default": "mdi:progress-clock"
+      },
+      "last_result": {
+        "default": "mdi:check-circle-outline",
+        "state": {
+          "fault": "mdi:alert-circle",
+          "aborted": "mdi:stop-circle-outline"
+        }
+      },
+      "last_dose": {
+        "default": "mdi:history"
+      },
+      "skipped_today": {
+        "default": "mdi:debug-step-over"
+      },
+      "boost_remaining": {
+        "default": "mdi:rocket-launch-outline"
+      },
+      "schedule": {
+        "default": "mdi:calendar-clock-outline",
+        "state": {
+          "none": "mdi:calendar-remove-outline"
+        }
+      },
+      "calibration": {
+        "default": "mdi:beaker-outline"
+      },
+      "calibrated_at": {
+        "default": "mdi:beaker-check-outline"
+      },
+      "tube_hours": {
+        "default": "mdi:timer-cog-outline"
+      },
+      "tube_wear": {
+        "default": "mdi:pipe-wrench"
+      },
+      "last_boot": {
+        "default": "mdi:restart"
+      },
+      "ip_address": {
+        "default": "mdi:ip-network"
+      },
+      "network": {
+        "default": "mdi:lan",
+        "state": {
+          "wlan": "mdi:wifi",
+          "none": "mdi:lan-disconnect"
+        }
+      },
+      "time_source": {
+        "default": "mdi:clock-check-outline"
+      },
+      "heap_free": {
+        "default": "mdi:memory"
+      }
+    },
+    "binary_sensor": {
+      "running": {
+        "default": "mdi:pump-off",
+        "state": {
+          "on": "mdi:pump"
+        }
+      },
+      "container_low": {
+        "default": "mdi:bottle-tonic-outline"
+      },
+      "container_warning": {
+        "default": "mdi:bottle-tonic-outline"
+      },
+      "driver_fault": {
+        "default": "mdi:engine-off-outline"
+      },
+      "daily_limit_reached": {
+        "default": "mdi:speedometer"
+      },
+      "calibration_due": {
+        "default": "mdi:beaker-alert-outline"
+      },
+      "tube_worn": {
+        "default": "mdi:pipe-leak"
+      },
+      "boost_active": {
+        "default": "mdi:rocket-outline",
+        "state": {
+          "on": "mdi:rocket-launch"
+        }
+      },
+      "calibration_pending": {
+        "default": "mdi:beaker-question-outline"
+      },
+      "alarm": {
+        "default": "mdi:alarm-light-outline"
+      },
+      "warning": {
+        "default": "mdi:alert-outline"
+      },
+      "clock_problem": {
+        "default": "mdi:clock-alert-outline"
+      },
+      "supply_problem": {
+        "default": "mdi:power-plug-outline"
+      }
+    },
+    "number": {
+      "daily_limit": {
+        "default": "mdi:speedometer"
+      },
+      "container_capacity": {
+        "default": "mdi:bottle-tonic"
+      },
+      "container_content": {
+        "default": "mdi:bottle-tonic-outline"
+      },
+      "warn_days": {
+        "default": "mdi:calendar-alert"
+      },
+      "low_days": {
+        "default": "mdi:calendar-alert"
+      },
+      "remind_months": {
+        "default": "mdi:calendar-refresh"
+      },
+      "retract_rev": {
+        "default": "mdi:rotate-left"
+      },
+      "led_night_brightness": {
+        "default": "mdi:brightness-4"
+      },
+      "dose_amount": {
+        "default": "mdi:eyedropper"
+      }
+    },
+    "select": {
+      "mode": {
+        "default": "mdi:cog-outline",
+        "state": {
+          "auto": "mdi:calendar-check",
+          "manual_only": "mdi:hand-back-right",
+          "disabled": "mdi:power-off"
+        }
+      },
+      "speed": {
+        "default": "mdi:speedometer-medium",
+        "state": {
+          "slow": "mdi:speedometer-slow",
+          "fast": "mdi:speedometer"
+        }
+      },
+      "direction": {
+        "default": "mdi:rotate-right"
+      },
+      "retract": {
+        "default": "mdi:rotate-left"
+      },
+      "manual_during_lock": {
+        "default": "mdi:lock-clock"
+      }
+    },
+    "switch": {
+      "automatic": {
+        "default": "mdi:calendar-check"
+      },
+      "led_night_mode": {
+        "default": "mdi:weather-night"
+      }
+    },
+    "text": {
+      "name": {
+        "default": "mdi:rename-outline"
+      }
+    },
+    "time": {
+      "led_night_start": {
+        "default": "mdi:weather-night"
+      },
+      "led_night_end": {
+        "default": "mdi:weather-sunny"
+      }
+    },
+    "button": {
+      "dose": {
+        "default": "mdi:eyedropper"
+      },
+      "stop": {
+        "default": "mdi:stop"
+      },
+      "refill": {
+        "default": "mdi:bottle-tonic-plus"
+      },
+      "tube_replaced": {
+        "default": "mdi:pipe"
+      },
+      "boost_stop": {
+        "default": "mdi:rocket-outline"
+      },
+      "stop_all": {
+        "default": "mdi:stop-circle"
+      },
+      "check_update": {
+        "default": "mdi:update"
+      }
+    },
+    "event": {
+      "pump_events": {
+        "default": "mdi:history"
+      },
+      "device_events": {
+        "default": "mdi:history"
+      }
+    }
+  },
+  "services": {
+    "dose": {
+      "service": "mdi:eyedropper"
+    },
+    "stop": {
+      "service": "mdi:stop"
+    },
+    "prime": {
+      "service": "mdi:water-sync"
+    },
+    "calibrate": {
+      "service": "mdi:beaker-check"
+    },
+    "set_container": {
+      "service": "mdi:bottle-tonic"
+    },
+    "refill": {
+      "service": "mdi:bottle-tonic-plus"
+    },
+    "set_tube_hours": {
+      "service": "mdi:pipe"
+    },
+    "set_schedule": {
+      "service": "mdi:calendar-edit"
+    },
+    "start_boost": {
+      "service": "mdi:rocket-launch"
+    },
+    "stop_boost": {
+      "service": "mdi:rocket-outline"
+    },
+    "set_lock_rules": {
+      "service": "mdi:lock-clock"
+    },
+    "get_history": {
+      "service": "mdi:history"
+    },
+    "get_daily_history": {
+      "service": "mdi:chart-bar"
+    }
+  }
+}

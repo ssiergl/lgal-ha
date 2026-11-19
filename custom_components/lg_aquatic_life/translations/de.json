@@ -1,0 +1,843 @@
+{
+  "config": {
+    "flow_title": "{name}",
+    "step": {
+      "user": {
+        "title": "LG-Aquatic-Life-Gerät hinzufügen",
+        "description": "Adresse des Geräts und ein API-Key. Den Key legst du in der Weboberfläche des Geräts an: Einstellungen → Anmeldung → API-Keys (Pro-Ansicht).",
+        "data": {
+          "host": "Adresse",
+          "api_key": "API-Key"
+        },
+        "data_description": {
+          "host": "Hostname (z. B. lgal-doser-e4f5.local) oder IP-Adresse.",
+          "api_key": "Beginnt mit lgal_. Wird nur beim Anlegen einmal angezeigt."
+        }
+      },
+      "zeroconf_confirm": {
+        "title": "LG-Aquatic-Life-Gerät gefunden",
+        "description": "{name} wurde unter {host} gefunden. Lege unter {url} einen API-Key an (Einstellungen → Anmeldung → API-Keys, Pro-Ansicht) und gib ihn hier ein.",
+        "data": {
+          "api_key": "API-Key"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Neuer API-Key",
+        "description": "Das Gerät unter {host} hat den API-Key abgelehnt. Lege unter {url} einen neuen an und gib ihn hier ein.",
+        "data": {
+          "api_key": "API-Key"
+        }
+      },
+      "reconfigure": {
+        "title": "Adresse oder Key ändern",
+        "description": "Adresse und API-Key des Geräts.",
+        "data": {
+          "host": "Adresse",
+          "api_key": "API-Key"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Der API-Key wurde abgelehnt.",
+      "cannot_connect": "Das Gerät ist nicht erreichbar.",
+      "setup_required": "Schließe zuerst die Ersteinrichtung des Geräts ab.",
+      "not_lgal": "Das ist kein LG-Aquatic-Life-Gerät.",
+      "unsupported_device": "Dieses LG-Aquatic-Life-Gerät wird noch nicht unterstützt.",
+      "unknown": "Unerwarteter Fehler."
+    },
+    "create_entry": {
+      "default": "**{name}** ist eingerichtet. Wähle nur für **{name}** einen Bereich: Die Pumpenköpfe darunter übernehmen ihn, solange ihr eigener Bereich leer bleibt."
+    },
+    "abort": {
+      "already_configured": "Das Gerät ist bereits eingerichtet.",
+      "reauth_successful": "Der neue API-Key ist gespeichert.",
+      "reconfigure_successful": "Gespeichert.",
+      "wrong_device": "Unter dieser Adresse antwortet ein anderes Gerät.",
+      "not_lgal": "Das ist kein LG-Aquatic-Life-Gerät."
+    }
+  },
+  "device": {
+    "pump": {
+      "name": "Pumpe {number}"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "container_remaining": {
+        "name": "Behälterinhalt"
+      },
+      "container_level": {
+        "name": "Füllstand"
+      },
+      "remaining_days": {
+        "name": "Reichweite"
+      },
+      "dosed_today": {
+        "name": "Heute dosiert"
+      },
+      "planned_today": {
+        "name": "Heute geplant"
+      },
+      "total_dosed": {
+        "name": "Gesamt dosiert"
+      },
+      "next_dose": {
+        "name": "Nächste Dosis"
+      },
+      "next_dose_amount": {
+        "name": "Menge nächste Dosis"
+      },
+      "activity": {
+        "name": "Aktivität",
+        "state": {
+          "idle": "Bereit",
+          "dosing": "Dosiert",
+          "priming": "Ansaugen",
+          "calibrating": "Kalibriert"
+        }
+      },
+      "dose_progress": {
+        "name": "Dosierfortschritt"
+      },
+      "last_result": {
+        "name": "Letztes Ergebnis",
+        "state": {
+          "success": "Erledigt",
+          "aborted": "Abgebrochen",
+          "fault": "Treiberfehler",
+          "locked": "Gesperrt",
+          "supply_missing": "Keine 24-V-Versorgung",
+          "supply_low": "24-V-Versorgung zu niedrig",
+          "heartbeat_lost": "Losgelassen",
+          "max_duration": "Maximaldauer"
+        }
+      },
+      "last_dose": {
+        "name": "Letzte Dosis"
+      },
+      "skipped_today": {
+        "name": "Heute übersprungen"
+      },
+      "boost_remaining": {
+        "name": "Boost Rest"
+      },
+      "schedule": {
+        "name": "Zeitplan",
+        "state": {
+          "none": "Keiner",
+          "spread": "Verteilt",
+          "times": "Einzelzeiten"
+        }
+      },
+      "calibration": {
+        "name": "Kalibrierung"
+      },
+      "calibrated_at": {
+        "name": "Kalibriert am"
+      },
+      "tube_hours": {
+        "name": "Schlauch-Betriebsstunden"
+      },
+      "tube_wear": {
+        "name": "Schlauchverschleiß"
+      },
+      "supply_voltage": {
+        "name": "Versorgungsspannung"
+      },
+      "last_boot": {
+        "name": "Letzter Start"
+      },
+      "ip_address": {
+        "name": "IP-Adresse"
+      },
+      "network": {
+        "name": "Netzwerk",
+        "state": {
+          "lan": "LAN",
+          "wlan": "WLAN",
+          "none": "Keins"
+        }
+      },
+      "time_source": {
+        "name": "Zeitquelle"
+      },
+      "heap_free": {
+        "name": "Freier Speicher"
+      }
+    },
+    "binary_sensor": {
+      "running": {
+        "name": "Läuft"
+      },
+      "container_low": {
+        "name": "Behälter fast leer"
+      },
+      "container_warning": {
+        "name": "Behälter wird knapp"
+      },
+      "driver_fault": {
+        "name": "Treiberfehler"
+      },
+      "daily_limit_reached": {
+        "name": "Tageslimit erreicht"
+      },
+      "calibration_due": {
+        "name": "Kalibrierung fällig"
+      },
+      "tube_worn": {
+        "name": "Schlauch verschlissen"
+      },
+      "boost_active": {
+        "name": "Boost"
+      },
+      "calibration_pending": {
+        "name": "Kalibrierung wartet auf Messwert"
+      },
+      "alarm": {
+        "name": "Alarm"
+      },
+      "warning": {
+        "name": "Warnung"
+      },
+      "clock_problem": {
+        "name": "Uhr"
+      },
+      "supply_problem": {
+        "name": "24-V-Versorgung"
+      },
+      "live_connection": {
+        "name": "Live-Verbindung"
+      }
+    },
+    "number": {
+      "daily_limit": {
+        "name": "Tageslimit"
+      },
+      "container_capacity": {
+        "name": "Behältergröße"
+      },
+      "container_content": {
+        "name": "Behälterinhalt"
+      },
+      "warn_days": {
+        "name": "Behälter-Warnung (Tage)"
+      },
+      "low_days": {
+        "name": "Behälter-Alarm (Tage)"
+      },
+      "remind_months": {
+        "name": "Kalibrier-Erinnerung"
+      },
+      "retract_rev": {
+        "name": "Rückzug gegen Tropfen"
+      },
+      "led_night_brightness": {
+        "name": "LED-Helligkeit nachts"
+      },
+      "dose_amount": {
+        "name": "Dosiermenge"
+      }
+    },
+    "select": {
+      "mode": {
+        "name": "Betriebsart",
+        "state": {
+          "auto": "Automatisch",
+          "manual_only": "Nur manuell",
+          "disabled": "Aus"
+        }
+      },
+      "speed": {
+        "name": "Geschwindigkeit",
+        "state": {
+          "slow": "Langsam",
+          "medium": "Mittel",
+          "fast": "Schnell"
+        }
+      },
+      "direction": {
+        "name": "Drehrichtung",
+        "state": {
+          "cw": "Im Uhrzeigersinn",
+          "ccw": "Gegen den Uhrzeigersinn"
+        }
+      },
+      "retract": {
+        "name": "Rückzug",
+        "state": {
+          "off": "Aus",
+          "global": "Standard",
+          "own": "Eigener Wert"
+        }
+      },
+      "manual_during_lock": {
+        "name": "Manuelle Dosis in Sperrzeit",
+        "state": {
+          "reject": "Ablehnen",
+          "queue": "Warten"
+        }
+      }
+    },
+    "switch": {
+      "automatic": {
+        "name": "Zeitplan"
+      },
+      "led_night_mode": {
+        "name": "LED-Nachtmodus"
+      }
+    },
+    "text": {
+      "name": {
+        "name": "Name"
+      }
+    },
+    "time": {
+      "led_night_start": {
+        "name": "LED-Nacht Beginn"
+      },
+      "led_night_end": {
+        "name": "LED-Nacht Ende"
+      }
+    },
+    "button": {
+      "dose": {
+        "name": "Dosieren"
+      },
+      "stop": {
+        "name": "Stopp"
+      },
+      "refill": {
+        "name": "Behälter aufgefüllt"
+      },
+      "tube_replaced": {
+        "name": "Schlauch gewechselt"
+      },
+      "boost_stop": {
+        "name": "Boost beenden"
+      },
+      "stop_all": {
+        "name": "Alle stoppen"
+      },
+      "restart": {
+        "name": "Neustart"
+      },
+      "check_update": {
+        "name": "Nach Updates suchen"
+      }
+    },
+    "event": {
+      "pump_events": {
+        "name": "Ereignisse",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "dose": "Dosierung",
+              "skip": "Dosis übersprungen",
+              "prime": "Ansaugen",
+              "calib_run": "Kalibrierlauf",
+              "container": "Behälter",
+              "calibration": "Kalibrierung übernommen",
+              "tube": "Schlauch",
+              "alarm": "Alarm",
+              "alarm_end": "Alarm beendet",
+              "boost": "Boost",
+              "mode": "Betriebsart",
+              "schedule": "Zeitplan",
+              "settings": "Einstellungen"
+            }
+          }
+        }
+      },
+      "device_events": {
+        "name": "Ereignisse",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "system": "System",
+              "locks": "Sperrregeln",
+              "alarm": "Alarm",
+              "alarm_end": "Alarm beendet"
+            }
+          }
+        }
+      }
+    },
+    "update": {
+      "firmware": {
+        "name": "Firmware"
+      }
+    }
+  },
+  "exceptions": {
+    "auth_failed": {
+      "message": "Der API-Key wurde abgelehnt. Lege in der Weboberfläche des Geräts einen neuen Key an."
+    },
+    "setup_required": {
+      "message": "Die Ersteinrichtung des Geräts ist nicht abgeschlossen. Schließe sie in der Weboberfläche des Geräts ab."
+    },
+    "cannot_connect": {
+      "message": "Das Gerät unter {host} ist nicht erreichbar."
+    },
+    "wrong_device": {
+      "message": "Unter {host} antwortet ein anderes Gerät."
+    },
+    "unsupported_device": {
+      "message": "Dieses LG-Aquatic-Life-Gerät ({project}) wird noch nicht unterstützt."
+    },
+    "no_container": {
+      "message": "Für die Pumpe ist keine Behältergröße eingestellt."
+    },
+    "pump_not_fitted": {
+      "message": "Pumpe {pump} ist nicht bestückt."
+    },
+    "pump_required": {
+      "message": "Wähle ein Pumpen-Gerät oder den Doser zusammen mit einer Pumpennummer."
+    },
+    "unknown_device": {
+      "message": "Das ist kein Gerät der LG-Aquatic-Life-Integration (oder es ist nicht geladen)."
+    },
+    "schedule_incomplete": {
+      "message": "Für den Zeitplan fehlt: {fields}"
+    },
+    "measured_required": {
+      "message": "Gib die gemessene Menge an."
+    },
+    "container_required": {
+      "message": "Gib Behältergröße oder Inhalt an."
+    },
+    "boost_period_required": {
+      "message": "Gib Tage oder Dosen für den Boost an."
+    },
+    "err_device_error": {
+      "message": "Das Gerät hat abgelehnt: {message} ({code})"
+    },
+    "err_pump_busy": {
+      "message": "Die Pumpe läuft gerade."
+    },
+    "err_pump_disabled": {
+      "message": "Die Pumpe ist ausgeschaltet."
+    },
+    "err_pump_not_fitted": {
+      "message": "Die Pumpe ist nicht bestückt."
+    },
+    "err_pump_manual_only": {
+      "message": "Die Pumpe steht auf „Nur manuell“."
+    },
+    "err_locked": {
+      "message": "Die Pumpen sind gesperrt (Firmware-Update läuft)."
+    },
+    "err_supply_missing": {
+      "message": "Keine 24-V-Versorgung."
+    },
+    "err_supply_low": {
+      "message": "Die 24-V-Versorgung ist zu niedrig."
+    },
+    "err_daily_limit": {
+      "message": "Das Tageslimit würde überschritten."
+    },
+    "err_time_invalid": {
+      "message": "Das Gerät hat keine gültige Zeit, das Tageslimit kann nicht geprüft werden."
+    },
+    "err_driver_unavailable": {
+      "message": "Der Pumpentreiber antwortet nicht."
+    },
+    "err_dose_too_small": {
+      "message": "Die Menge liegt unter der kleinsten Dosis."
+    },
+    "err_dose_too_large": {
+      "message": "Die Menge ist zu groß."
+    },
+    "err_measured_out_of_range": {
+      "message": "Die gemessene Menge ist unplausibel (0,25- bis 4-facher Nennwert)."
+    },
+    "err_no_calibration_run": {
+      "message": "Es gibt keinen abgeschlossenen Kalibrierlauf."
+    },
+    "err_not_priming": {
+      "message": "Die Pumpe saugt gerade nicht an."
+    },
+    "err_collision_lock": {
+      "message": "Eine Sperrzeit zu einer anderen Pumpe läuft; möglich ab {retry}."
+    },
+    "err_queue_full": {
+      "message": "Eine Dosis wartet bereits auf das Ende der Sperrzeit."
+    },
+    "err_no_steps": {
+      "message": "Der Kalibrierlauf hat keine Schritte."
+    },
+    "err_speed_out_of_range": {
+      "message": "Geschwindigkeit außerhalb des Bereichs."
+    },
+    "err_conflict": {
+      "message": "Der Zeitplan kollidiert: {conflicts}"
+    },
+    "err_exceeds_daily_limit": {
+      "message": "Der Zeitplan überschreitet das Tageslimit."
+    },
+    "err_off_grid": {
+      "message": "Zeiten müssen im Raster liegen (z. B. alle 5 Minuten): {message}"
+    },
+    "err_duplicate_time": {
+      "message": "Eine Zeit kommt doppelt vor: {message}"
+    },
+    "err_invalid_count": {
+      "message": "Ungültige Anzahl Dosen (1–96)."
+    },
+    "err_invalid_range": {
+      "message": "Das Ende muss nach dem Beginn liegen."
+    },
+    "err_slots_too_dense": {
+      "message": "Zu viele Dosen für dieses Zeitfenster."
+    },
+    "err_invalid_days": {
+      "message": "Kein Wochentag gewählt."
+    },
+    "err_no_slots": {
+      "message": "Keine geplanten Dosen in diesem Zeitraum (Boost braucht einen Zeitplan und Automatik)."
+    },
+    "err_invalid_lock": {
+      "message": "Ungültige Sperrregel."
+    },
+    "err_pump_running": {
+      "message": "Nicht möglich, während eine Pumpe läuft."
+    },
+    "err_ota_in_progress": {
+      "message": "Ein Firmware-Update läuft bereits."
+    },
+    "err_no_source": {
+      "message": "Das Gerät hat keine Update-Quelle."
+    },
+    "err_no_update": {
+      "message": "Keine neuere Firmware verfügbar."
+    },
+    "err_invalid_param": {
+      "message": "Ungültiger Wert: {message}"
+    },
+    "err_setup_required": {
+      "message": "Die Ersteinrichtung des Geräts ist nicht abgeschlossen."
+    },
+    "err_storage_error": {
+      "message": "Das Gerät konnte nicht speichern."
+    }
+  },
+  "services": {
+    "dose": {
+      "name": "Dosieren",
+      "description": "Dosiert jetzt eine Menge (Tageslimit, Sperrzeiten und Behälter gelten).",
+      "fields": {
+        "device_id": {
+          "name": "Gerät",
+          "description": "Eine Pumpe oder der Doser (dann die Pumpennummer angeben)."
+        },
+        "pump": {
+          "name": "Pumpe",
+          "description": "Pumpennummer 1–5, nur wenn der Doser selbst gewählt ist."
+        },
+        "amount": {
+          "name": "Menge",
+          "description": "Menge in ml."
+        },
+        "speed": {
+          "name": "Geschwindigkeit",
+          "description": "Geschwindigkeitsstufe; Standard: Einstellung der Pumpe."
+        }
+      }
+    },
+    "stop": {
+      "name": "Stoppen",
+      "description": "Stoppt eine Pumpe (oder alle, wenn der Doser selbst gewählt ist).",
+      "fields": {
+        "device_id": {
+          "name": "Gerät",
+          "description": "Eine Pumpe oder der Doser (dann die Pumpennummer angeben)."
+        },
+        "pump": {
+          "name": "Pumpe",
+          "description": "Pumpennummer 1–5, nur wenn der Doser selbst gewählt ist."
+        }
+      }
+    },
+    "prime": {
+      "name": "Ansaugen",
+      "description": "Füllt den Schlauch. Mit Dauer saugt sie so lange an; ohne Dauer, solange 'beat' kommt (gedrückt halten).",
+      "fields": {
+        "device_id": {
+          "name": "Gerät",
+          "description": "Eine Pumpe oder der Doser (dann die Pumpennummer angeben)."
+        },
+        "pump": {
+          "name": "Pumpe",
+          "description": "Pumpennummer 1–5, nur wenn der Doser selbst gewählt ist."
+        },
+        "action": {
+          "name": "Aktion",
+          "description": "start, beat (weiterlaufen) oder stop."
+        },
+        "duration": {
+          "name": "Dauer",
+          "description": "Sekunden (das Gerät stoppt bei seinem eigenen Maximum)."
+        },
+        "speed": {
+          "name": "Geschwindigkeit",
+          "description": "Geschwindigkeitsstufe; Standard: Einstellung der Pumpe."
+        }
+      }
+    },
+    "calibrate": {
+      "name": "Kalibrieren",
+      "description": "Kalibrierung: Lauf starten, dann die im Messbecher gemessene Menge übernehmen oder abbrechen.",
+      "fields": {
+        "device_id": {
+          "name": "Gerät",
+          "description": "Eine Pumpe oder der Doser (dann die Pumpennummer angeben)."
+        },
+        "pump": {
+          "name": "Pumpe",
+          "description": "Pumpennummer 1–5, nur wenn der Doser selbst gewählt ist."
+        },
+        "action": {
+          "name": "Aktion",
+          "description": "start, apply oder cancel."
+        },
+        "amount": {
+          "name": "Menge",
+          "description": "start: Zielmenge (Standard vom Gerät); apply: gemessene Menge in ml."
+        },
+        "speed": {
+          "name": "Geschwindigkeit",
+          "description": "Geschwindigkeitsstufe; Standard: Einstellung der Pumpe."
+        }
+      }
+    },
+    "set_container": {
+      "name": "Behälter setzen",
+      "description": "Setzt Behältergröße und/oder Inhalt. Nur Größe = neuer, voller Behälter; Größe 0 = keine Verfolgung.",
+      "fields": {
+        "device_id": {
+          "name": "Gerät",
+          "description": "Eine Pumpe oder der Doser (dann die Pumpennummer angeben)."
+        },
+        "pump": {
+          "name": "Pumpe",
+          "description": "Pumpennummer 1–5, nur wenn der Doser selbst gewählt ist."
+        },
+        "capacity": {
+          "name": "Größe",
+          "description": "Behältergröße in ml."
+        },
+        "remaining": {
+          "name": "Inhalt",
+          "description": "Aktueller Inhalt in ml."
+        }
+      }
+    },
+    "refill": {
+      "name": "Behälter aufgefüllt",
+      "description": "Setzt den Inhalt auf die Behältergröße.",
+      "fields": {
+        "device_id": {
+          "name": "Gerät",
+          "description": "Eine Pumpe oder der Doser (dann die Pumpennummer angeben)."
+        },
+        "pump": {
+          "name": "Pumpe",
+          "description": "Pumpennummer 1–5, nur wenn der Doser selbst gewählt ist."
+        }
+      }
+    },
+    "set_tube_hours": {
+      "name": "Schlauchstunden setzen",
+      "description": "Setzt die Schlauch-Betriebsstunden; 0 = neuer Schlauch (danach neu kalibrieren).",
+      "fields": {
+        "device_id": {
+          "name": "Gerät",
+          "description": "Eine Pumpe oder der Doser (dann die Pumpennummer angeben)."
+        },
+        "pump": {
+          "name": "Pumpe",
+          "description": "Pumpennummer 1–5, nur wenn der Doser selbst gewählt ist."
+        },
+        "hours": {
+          "name": "Stunden",
+          "description": "Betriebsstunden."
+        }
+      }
+    },
+    "set_schedule": {
+      "name": "Zeitplan setzen",
+      "description": "Setzt den Zeitplan der Pumpe. Weggelassene Felder behalten ihren Wert; Art 'none' löscht ihn.",
+      "fields": {
+        "device_id": {
+          "name": "Gerät",
+          "description": "Eine Pumpe oder der Doser (dann die Pumpennummer angeben)."
+        },
+        "pump": {
+          "name": "Pumpe",
+          "description": "Pumpennummer 1–5, nur wenn der Doser selbst gewählt ist."
+        },
+        "schedule": {
+          "name": "Zeitplan (JSON)",
+          "description": "Der komplette Zeitplan als JSON des Geräts; ersetzt alle anderen Felder."
+        },
+        "kind": {
+          "name": "Art",
+          "description": "spread (Tagesmenge in N Dosen), times (Einzelzeiten) oder none."
+        },
+        "amount": {
+          "name": "Tagesmenge",
+          "description": "ml pro Tag (spread)."
+        },
+        "doses": {
+          "name": "Dosen",
+          "description": "Anzahl Dosen pro Tag (spread)."
+        },
+        "start": {
+          "name": "Beginn",
+          "description": "Erste Dosis HH:MM (spread)."
+        },
+        "end": {
+          "name": "Ende",
+          "description": "Letzte Dosis HH:MM (spread, mehr als eine Dosis)."
+        },
+        "times": {
+          "name": "Zeiten",
+          "description": "Liste von Einträgen mit time (HH:MM) und ml (times)."
+        },
+        "days": {
+          "name": "Tage",
+          "description": "daily, weekdays oder interval."
+        },
+        "weekdays": {
+          "name": "Wochentage",
+          "description": "mon … sun (days: weekdays)."
+        },
+        "every": {
+          "name": "Alle N Tage",
+          "description": "Abstand in Tagen (days: interval)."
+        },
+        "anchor": {
+          "name": "Startdatum",
+          "description": "Erster Tag des Intervalls."
+        },
+        "power_loss": {
+          "name": "Nach Stromausfall",
+          "description": "skip_missed oder catch_up_window."
+        },
+        "catch_up_min": {
+          "name": "Nachholfenster",
+          "description": "Minuten, in denen verpasste Dosen nachgeholt werden."
+        }
+      }
+    },
+    "start_boost": {
+      "name": "Boost starten",
+      "description": "Dosiert eine Zusatzmenge verteilt über Tage oder die nächsten geplanten Dosen.",
+      "fields": {
+        "device_id": {
+          "name": "Gerät",
+          "description": "Eine Pumpe oder der Doser (dann die Pumpennummer angeben)."
+        },
+        "pump": {
+          "name": "Pumpe",
+          "description": "Pumpennummer 1–5, nur wenn der Doser selbst gewählt ist."
+        },
+        "amount": {
+          "name": "Menge",
+          "description": "Zusatzmenge in ml."
+        },
+        "days": {
+          "name": "Tage",
+          "description": "Verteilt über 1–30 Tage."
+        },
+        "doses": {
+          "name": "Dosen",
+          "description": "Verteilt über die nächsten 1–100 Dosen."
+        }
+      }
+    },
+    "stop_boost": {
+      "name": "Boost beenden",
+      "description": "Beendet einen laufenden Boost.",
+      "fields": {
+        "device_id": {
+          "name": "Gerät",
+          "description": "Eine Pumpe oder der Doser (dann die Pumpennummer angeben)."
+        },
+        "pump": {
+          "name": "Pumpe",
+          "description": "Pumpennummer 1–5, nur wenn der Doser selbst gewählt ist."
+        }
+      }
+    },
+    "set_lock_rules": {
+      "name": "Sperrregeln setzen",
+      "description": "Mindestabstände zwischen Pumpen und was eine manuelle Dosis in der Sperrzeit tut.",
+      "fields": {
+        "device_id": {
+          "name": "Gerät",
+          "description": "Eine Pumpe oder der Doser (dann die Pumpennummer angeben)."
+        },
+        "pump": {
+          "name": "Pumpe",
+          "description": "Pumpennummer 1–5, nur wenn der Doser selbst gewählt ist."
+        },
+        "manual": {
+          "name": "Manuelle Dosis",
+          "description": "reject oder queue."
+        },
+        "rules": {
+          "name": "Regeln",
+          "description": "Liste von Einträgen mit pumps (zwei Nummern) und gap_min; ersetzt alle Regeln."
+        }
+      }
+    },
+    "get_history": {
+      "name": "Historie abrufen",
+      "description": "Liefert die Historien-Ereignisse des Geräts (oder einer Pumpe).",
+      "fields": {
+        "device_id": {
+          "name": "Gerät",
+          "description": "Eine Pumpe oder der Doser (dann die Pumpennummer angeben)."
+        },
+        "pump": {
+          "name": "Pumpe",
+          "description": "Pumpennummer 1–5, nur wenn der Doser selbst gewählt ist."
+        },
+        "days": {
+          "name": "Tage",
+          "description": "Zeitraum 1–60 Tage."
+        },
+        "kinds": {
+          "name": "Arten",
+          "description": "z. B. dose, skip, alarm."
+        },
+        "limit": {
+          "name": "Anzahl",
+          "description": "Höchstens so viele Ereignisse (1–500)."
+        },
+        "offset": {
+          "name": "Versatz",
+          "description": "So viele Ereignisse überspringen (Blättern)."
+        }
+      }
+    },
+    "get_daily_history": {
+      "name": "Tagesmengen abrufen",
+      "description": "Liefert dosierte Menge, Anzahl Dosen und übersprungene Dosen pro Tag und Pumpe.",
+      "fields": {
+        "device_id": {
+          "name": "Gerät",
+          "description": "Eine Pumpe oder der Doser (dann die Pumpennummer angeben)."
+        },
+        "pump": {
+          "name": "Pumpe",
+          "description": "Pumpennummer 1–5, nur wenn der Doser selbst gewählt ist."
+        },
+        "days": {
+          "name": "Tage",
+          "description": "1–60 Tage."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "domain": "lg_aquatic_life",
+  "name": "LG Aquatic Life",
+  "codeowners": ["@ssiergl"],
+  "config_flow": true,
+  "dependencies": ["http", "lovelace"],
+  "documentation": "https://github.com/ssiergl/lgal-ha",
+  "integration_type": "device",
+  "iot_class": "local_push",
+  "issue_tracker": "https://github.com/ssiergl/lgal-ha/issues",
+  "requirements": [],
+  "version": "0.1.0",
+  "zeroconf": [
+    {
+      "type": "_http._tcp.local.",
+      "properties": { "vendor": "lg aquatic life" }
+    }
+  ]
+}

@@ -1,0 +1,843 @@
+{
+  "config": {
+    "flow_title": "{name}",
+    "step": {
+      "user": {
+        "title": "Add an LG Aquatic Life device",
+        "description": "Address of the device and an API key. Create the key in the device's web interface: Settings → Sign-in → API keys (pro view).",
+        "data": {
+          "host": "Address",
+          "api_key": "API key"
+        },
+        "data_description": {
+          "host": "Host name (e.g. lgal-doser-e4f5.local) or IP address.",
+          "api_key": "Starts with lgal_. Shown only once when it is created."
+        }
+      },
+      "zeroconf_confirm": {
+        "title": "LG Aquatic Life device found",
+        "description": "{name} was found at {host}. Create an API key at {url} (Settings → Sign-in → API keys, pro view) and enter it here.",
+        "data": {
+          "api_key": "API key"
+        }
+      },
+      "reauth_confirm": {
+        "title": "New API key",
+        "description": "The device at {host} refused the API key. Create a new one at {url} and enter it here.",
+        "data": {
+          "api_key": "API key"
+        }
+      },
+      "reconfigure": {
+        "title": "Change address or key",
+        "description": "Address and API key of the device.",
+        "data": {
+          "host": "Address",
+          "api_key": "API key"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "The API key was refused.",
+      "cannot_connect": "The device cannot be reached.",
+      "setup_required": "Finish the initial setup of the device first.",
+      "not_lgal": "This is not an LG Aquatic Life device.",
+      "unsupported_device": "This LG Aquatic Life device is not supported yet.",
+      "unknown": "Unexpected error."
+    },
+    "create_entry": {
+      "default": "**{name}** is set up. Choose an area for **{name}** only: its pump heads below take it over as long as their own area stays empty."
+    },
+    "abort": {
+      "already_configured": "The device is already set up.",
+      "reauth_successful": "The new API key is saved.",
+      "reconfigure_successful": "Saved.",
+      "wrong_device": "Another device answers at this address.",
+      "not_lgal": "This is not an LG Aquatic Life device."
+    }
+  },
+  "device": {
+    "pump": {
+      "name": "Pump {number}"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "container_remaining": {
+        "name": "Container content"
+      },
+      "container_level": {
+        "name": "Container level"
+      },
+      "remaining_days": {
+        "name": "Range"
+      },
+      "dosed_today": {
+        "name": "Dosed today"
+      },
+      "planned_today": {
+        "name": "Planned today"
+      },
+      "total_dosed": {
+        "name": "Total dosed"
+      },
+      "next_dose": {
+        "name": "Next dose"
+      },
+      "next_dose_amount": {
+        "name": "Next dose amount"
+      },
+      "activity": {
+        "name": "Activity",
+        "state": {
+          "idle": "Idle",
+          "dosing": "Dosing",
+          "priming": "Priming",
+          "calibrating": "Calibrating"
+        }
+      },
+      "dose_progress": {
+        "name": "Dose progress"
+      },
+      "last_result": {
+        "name": "Last result",
+        "state": {
+          "success": "Done",
+          "aborted": "Stopped",
+          "fault": "Driver fault",
+          "locked": "Locked",
+          "supply_missing": "No 24 V supply",
+          "supply_low": "24 V supply too low",
+          "heartbeat_lost": "Released",
+          "max_duration": "Maximum duration"
+        }
+      },
+      "last_dose": {
+        "name": "Last dose"
+      },
+      "skipped_today": {
+        "name": "Skipped today"
+      },
+      "boost_remaining": {
+        "name": "Boost remaining"
+      },
+      "schedule": {
+        "name": "Schedule",
+        "state": {
+          "none": "None",
+          "spread": "Spread",
+          "times": "Single times"
+        }
+      },
+      "calibration": {
+        "name": "Calibration"
+      },
+      "calibrated_at": {
+        "name": "Calibrated at"
+      },
+      "tube_hours": {
+        "name": "Tube operating hours"
+      },
+      "tube_wear": {
+        "name": "Tube wear"
+      },
+      "supply_voltage": {
+        "name": "Supply voltage"
+      },
+      "last_boot": {
+        "name": "Last start"
+      },
+      "ip_address": {
+        "name": "IP address"
+      },
+      "network": {
+        "name": "Network",
+        "state": {
+          "lan": "LAN",
+          "wlan": "Wi-Fi",
+          "none": "None"
+        }
+      },
+      "time_source": {
+        "name": "Time source"
+      },
+      "heap_free": {
+        "name": "Free memory"
+      }
+    },
+    "binary_sensor": {
+      "running": {
+        "name": "Running"
+      },
+      "container_low": {
+        "name": "Container almost empty"
+      },
+      "container_warning": {
+        "name": "Container running low"
+      },
+      "driver_fault": {
+        "name": "Driver fault"
+      },
+      "daily_limit_reached": {
+        "name": "Daily limit reached"
+      },
+      "calibration_due": {
+        "name": "Calibration due"
+      },
+      "tube_worn": {
+        "name": "Tube worn"
+      },
+      "boost_active": {
+        "name": "Boost"
+      },
+      "calibration_pending": {
+        "name": "Calibration waiting for measurement"
+      },
+      "alarm": {
+        "name": "Alarm"
+      },
+      "warning": {
+        "name": "Warning"
+      },
+      "clock_problem": {
+        "name": "Clock"
+      },
+      "supply_problem": {
+        "name": "24 V supply"
+      },
+      "live_connection": {
+        "name": "Live connection"
+      }
+    },
+    "number": {
+      "daily_limit": {
+        "name": "Daily limit"
+      },
+      "container_capacity": {
+        "name": "Container size"
+      },
+      "container_content": {
+        "name": "Container content"
+      },
+      "warn_days": {
+        "name": "Container warning (days)"
+      },
+      "low_days": {
+        "name": "Container alarm (days)"
+      },
+      "remind_months": {
+        "name": "Calibration reminder"
+      },
+      "retract_rev": {
+        "name": "Anti-drip retract"
+      },
+      "led_night_brightness": {
+        "name": "LED night brightness"
+      },
+      "dose_amount": {
+        "name": "Dose amount"
+      }
+    },
+    "select": {
+      "mode": {
+        "name": "Mode",
+        "state": {
+          "auto": "Automatic",
+          "manual_only": "Manual only",
+          "disabled": "Off"
+        }
+      },
+      "speed": {
+        "name": "Speed",
+        "state": {
+          "slow": "Slow",
+          "medium": "Medium",
+          "fast": "Fast"
+        }
+      },
+      "direction": {
+        "name": "Direction",
+        "state": {
+          "cw": "Clockwise",
+          "ccw": "Counter-clockwise"
+        }
+      },
+      "retract": {
+        "name": "Retract",
+        "state": {
+          "off": "Off",
+          "global": "Default",
+          "own": "Own value"
+        }
+      },
+      "manual_during_lock": {
+        "name": "Manual dose during lock time",
+        "state": {
+          "reject": "Reject",
+          "queue": "Wait"
+        }
+      }
+    },
+    "switch": {
+      "automatic": {
+        "name": "Schedule"
+      },
+      "led_night_mode": {
+        "name": "LED night mode"
+      }
+    },
+    "text": {
+      "name": {
+        "name": "Name"
+      }
+    },
+    "time": {
+      "led_night_start": {
+        "name": "LED night start"
+      },
+      "led_night_end": {
+        "name": "LED night end"
+      }
+    },
+    "button": {
+      "dose": {
+        "name": "Dose"
+      },
+      "stop": {
+        "name": "Stop"
+      },
+      "refill": {
+        "name": "Container refilled"
+      },
+      "tube_replaced": {
+        "name": "Tube replaced"
+      },
+      "boost_stop": {
+        "name": "End boost"
+      },
+      "stop_all": {
+        "name": "Stop all"
+      },
+      "restart": {
+        "name": "Restart"
+      },
+      "check_update": {
+        "name": "Check for updates"
+      }
+    },
+    "event": {
+      "pump_events": {
+        "name": "Events",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "dose": "Dose",
+              "skip": "Dose skipped",
+              "prime": "Priming",
+              "calib_run": "Calibration run",
+              "container": "Container",
+              "calibration": "Calibration applied",
+              "tube": "Tube",
+              "alarm": "Alarm",
+              "alarm_end": "Alarm ended",
+              "boost": "Boost",
+              "mode": "Mode",
+              "schedule": "Schedule",
+              "settings": "Settings"
+            }
+          }
+        }
+      },
+      "device_events": {
+        "name": "Events",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "system": "System",
+              "locks": "Lock rules",
+              "alarm": "Alarm",
+              "alarm_end": "Alarm ended"
+            }
+          }
+        }
+      }
+    },
+    "update": {
+      "firmware": {
+        "name": "Firmware"
+      }
+    }
+  },
+  "exceptions": {
+    "auth_failed": {
+      "message": "The API key was refused. Create a new key in the device's web interface."
+    },
+    "setup_required": {
+      "message": "The initial setup of the device is not finished. Finish it in the device's web interface."
+    },
+    "cannot_connect": {
+      "message": "Cannot reach the device at {host}."
+    },
+    "wrong_device": {
+      "message": "Another device answers at {host}."
+    },
+    "unsupported_device": {
+      "message": "This LG Aquatic Life device ({project}) is not supported yet."
+    },
+    "no_container": {
+      "message": "The pump has no container size set."
+    },
+    "pump_not_fitted": {
+      "message": "Pump {pump} is not fitted."
+    },
+    "pump_required": {
+      "message": "Select a pump device, or the doser together with a pump number."
+    },
+    "unknown_device": {
+      "message": "This is not a device of the LG Aquatic Life integration (or it is not loaded)."
+    },
+    "schedule_incomplete": {
+      "message": "The schedule needs: {fields}"
+    },
+    "measured_required": {
+      "message": "Enter the measured amount."
+    },
+    "container_required": {
+      "message": "Enter the container size or the content."
+    },
+    "boost_period_required": {
+      "message": "Enter days or doses for the boost."
+    },
+    "err_device_error": {
+      "message": "The device refused: {message} ({code})"
+    },
+    "err_pump_busy": {
+      "message": "The pump is busy."
+    },
+    "err_pump_disabled": {
+      "message": "The pump is switched off."
+    },
+    "err_pump_not_fitted": {
+      "message": "The pump is not fitted."
+    },
+    "err_pump_manual_only": {
+      "message": "The pump is set to manual only."
+    },
+    "err_locked": {
+      "message": "The pumps are locked (firmware update running)."
+    },
+    "err_supply_missing": {
+      "message": "No 24 V supply."
+    },
+    "err_supply_low": {
+      "message": "The 24 V supply is too low."
+    },
+    "err_daily_limit": {
+      "message": "The daily limit would be exceeded."
+    },
+    "err_time_invalid": {
+      "message": "The device has no valid time, the daily limit cannot be checked."
+    },
+    "err_driver_unavailable": {
+      "message": "The pump driver does not answer."
+    },
+    "err_dose_too_small": {
+      "message": "The amount is below the smallest dose."
+    },
+    "err_dose_too_large": {
+      "message": "The amount is too large."
+    },
+    "err_measured_out_of_range": {
+      "message": "The measured amount is implausible (0.25 to 4 times the nominal value)."
+    },
+    "err_no_calibration_run": {
+      "message": "There is no finished calibration run."
+    },
+    "err_not_priming": {
+      "message": "The pump is not priming."
+    },
+    "err_collision_lock": {
+      "message": "A lock time to another pump is running; possible from {retry}."
+    },
+    "err_queue_full": {
+      "message": "A dose is already waiting for the lock time to end."
+    },
+    "err_no_steps": {
+      "message": "The calibration run has no steps."
+    },
+    "err_speed_out_of_range": {
+      "message": "Speed out of range."
+    },
+    "err_conflict": {
+      "message": "The schedule collides: {conflicts}"
+    },
+    "err_exceeds_daily_limit": {
+      "message": "The schedule exceeds the daily limit."
+    },
+    "err_off_grid": {
+      "message": "Times must lie on the schedule grid (e.g. every 5 minutes): {message}"
+    },
+    "err_duplicate_time": {
+      "message": "A time appears twice: {message}"
+    },
+    "err_invalid_count": {
+      "message": "Invalid number of doses (1–96)."
+    },
+    "err_invalid_range": {
+      "message": "The end must lie after the start."
+    },
+    "err_slots_too_dense": {
+      "message": "Too many doses for this time window."
+    },
+    "err_invalid_days": {
+      "message": "No weekday selected."
+    },
+    "err_no_slots": {
+      "message": "No scheduled doses in this period (a boost needs a schedule and automatic mode)."
+    },
+    "err_invalid_lock": {
+      "message": "Invalid lock rule."
+    },
+    "err_pump_running": {
+      "message": "Not possible while a pump runs."
+    },
+    "err_ota_in_progress": {
+      "message": "A firmware update is already running."
+    },
+    "err_no_source": {
+      "message": "The device has no update source."
+    },
+    "err_no_update": {
+      "message": "No newer firmware available."
+    },
+    "err_invalid_param": {
+      "message": "Invalid value: {message}"
+    },
+    "err_setup_required": {
+      "message": "The initial setup of the device is not finished."
+    },
+    "err_storage_error": {
+      "message": "The device could not save."
+    }
+  },
+  "services": {
+    "dose": {
+      "name": "Dose",
+      "description": "Doses an amount now (daily limit, lock times and container apply).",
+      "fields": {
+        "device_id": {
+          "name": "Device",
+          "description": "A pump, or the doser (then set the pump number)."
+        },
+        "pump": {
+          "name": "Pump",
+          "description": "Pump number 1–5, only when the doser itself is selected."
+        },
+        "amount": {
+          "name": "Amount",
+          "description": "Amount in ml."
+        },
+        "speed": {
+          "name": "Speed",
+          "description": "Speed tier; default: the pump's setting."
+        }
+      }
+    },
+    "stop": {
+      "name": "Stop",
+      "description": "Stops a pump (or all, when the doser itself is selected).",
+      "fields": {
+        "device_id": {
+          "name": "Device",
+          "description": "A pump, or the doser (then set the pump number)."
+        },
+        "pump": {
+          "name": "Pump",
+          "description": "Pump number 1–5, only when the doser itself is selected."
+        }
+      }
+    },
+    "prime": {
+      "name": "Prime",
+      "description": "Fills the tube. With a duration it primes for that long; without one it primes while 'beat' keeps coming (hold to run).",
+      "fields": {
+        "device_id": {
+          "name": "Device",
+          "description": "A pump, or the doser (then set the pump number)."
+        },
+        "pump": {
+          "name": "Pump",
+          "description": "Pump number 1–5, only when the doser itself is selected."
+        },
+        "action": {
+          "name": "Action",
+          "description": "start, beat (keep running) or stop."
+        },
+        "duration": {
+          "name": "Duration",
+          "description": "Seconds (the device stops at its own maximum)."
+        },
+        "speed": {
+          "name": "Speed",
+          "description": "Speed tier; default: the pump's setting."
+        }
+      }
+    },
+    "calibrate": {
+      "name": "Calibrate",
+      "description": "Calibration: start a run, then apply the amount measured in the cup, or cancel.",
+      "fields": {
+        "device_id": {
+          "name": "Device",
+          "description": "A pump, or the doser (then set the pump number)."
+        },
+        "pump": {
+          "name": "Pump",
+          "description": "Pump number 1–5, only when the doser itself is selected."
+        },
+        "action": {
+          "name": "Action",
+          "description": "start, apply or cancel."
+        },
+        "amount": {
+          "name": "Amount",
+          "description": "start: target amount (default from the device); apply: measured amount in ml."
+        },
+        "speed": {
+          "name": "Speed",
+          "description": "Speed tier; default: the pump's setting."
+        }
+      }
+    },
+    "set_container": {
+      "name": "Set container",
+      "description": "Sets container size and/or content. Size alone = new, full container; size 0 = no tracking.",
+      "fields": {
+        "device_id": {
+          "name": "Device",
+          "description": "A pump, or the doser (then set the pump number)."
+        },
+        "pump": {
+          "name": "Pump",
+          "description": "Pump number 1–5, only when the doser itself is selected."
+        },
+        "capacity": {
+          "name": "Size",
+          "description": "Container size in ml."
+        },
+        "remaining": {
+          "name": "Content",
+          "description": "Current content in ml."
+        }
+      }
+    },
+    "refill": {
+      "name": "Container refilled",
+      "description": "Sets the content to the container size.",
+      "fields": {
+        "device_id": {
+          "name": "Device",
+          "description": "A pump, or the doser (then set the pump number)."
+        },
+        "pump": {
+          "name": "Pump",
+          "description": "Pump number 1–5, only when the doser itself is selected."
+        }
+      }
+    },
+    "set_tube_hours": {
+      "name": "Set tube hours",
+      "description": "Sets the tube operating hours; 0 = new tube (calibrate again afterwards).",
+      "fields": {
+        "device_id": {
+          "name": "Device",
+          "description": "A pump, or the doser (then set the pump number)."
+        },
+        "pump": {
+          "name": "Pump",
+          "description": "Pump number 1–5, only when the doser itself is selected."
+        },
+        "hours": {
+          "name": "Hours",
+          "description": "Operating hours."
+        }
+      }
+    },
+    "set_schedule": {
+      "name": "Set schedule",
+      "description": "Sets the pump's schedule. Fields left out keep their current value; kind 'none' deletes it.",
+      "fields": {
+        "device_id": {
+          "name": "Device",
+          "description": "A pump, or the doser (then set the pump number)."
+        },
+        "pump": {
+          "name": "Pump",
+          "description": "Pump number 1–5, only when the doser itself is selected."
+        },
+        "schedule": {
+          "name": "Schedule (JSON)",
+          "description": "The complete schedule as the device's JSON; replaces all other fields."
+        },
+        "kind": {
+          "name": "Kind",
+          "description": "spread (daily amount in N doses), times (single times) or none."
+        },
+        "amount": {
+          "name": "Daily amount",
+          "description": "ml per day (spread)."
+        },
+        "doses": {
+          "name": "Doses",
+          "description": "Number of doses per day (spread)."
+        },
+        "start": {
+          "name": "Start",
+          "description": "First dose HH:MM (spread)."
+        },
+        "end": {
+          "name": "End",
+          "description": "Last dose HH:MM (spread, more than one dose)."
+        },
+        "times": {
+          "name": "Times",
+          "description": "List of entries with time (HH:MM) and ml (times)."
+        },
+        "days": {
+          "name": "Days",
+          "description": "daily, weekdays or interval."
+        },
+        "weekdays": {
+          "name": "Weekdays",
+          "description": "mon … sun (days: weekdays)."
+        },
+        "every": {
+          "name": "Every N days",
+          "description": "Interval in days (days: interval)."
+        },
+        "anchor": {
+          "name": "Start date",
+          "description": "First day of the interval."
+        },
+        "power_loss": {
+          "name": "After a power cut",
+          "description": "skip_missed or catch_up_window."
+        },
+        "catch_up_min": {
+          "name": "Catch-up window",
+          "description": "Minutes in which missed doses are caught up."
+        }
+      }
+    },
+    "start_boost": {
+      "name": "Start boost",
+      "description": "Doses an extra amount spread over days or over the next scheduled doses.",
+      "fields": {
+        "device_id": {
+          "name": "Device",
+          "description": "A pump, or the doser (then set the pump number)."
+        },
+        "pump": {
+          "name": "Pump",
+          "description": "Pump number 1–5, only when the doser itself is selected."
+        },
+        "amount": {
+          "name": "Amount",
+          "description": "Extra amount in ml."
+        },
+        "days": {
+          "name": "Days",
+          "description": "Spread over 1–30 days."
+        },
+        "doses": {
+          "name": "Doses",
+          "description": "Spread over the next 1–100 doses."
+        }
+      }
+    },
+    "stop_boost": {
+      "name": "End boost",
+      "description": "Ends a running boost.",
+      "fields": {
+        "device_id": {
+          "name": "Device",
+          "description": "A pump, or the doser (then set the pump number)."
+        },
+        "pump": {
+          "name": "Pump",
+          "description": "Pump number 1–5, only when the doser itself is selected."
+        }
+      }
+    },
+    "set_lock_rules": {
+      "name": "Set lock rules",
+      "description": "Minimum gaps between pumps and what a manual dose does during a lock time.",
+      "fields": {
+        "device_id": {
+          "name": "Device",
+          "description": "A pump, or the doser (then set the pump number)."
+        },
+        "pump": {
+          "name": "Pump",
+          "description": "Pump number 1–5, only when the doser itself is selected."
+        },
+        "manual": {
+          "name": "Manual dose",
+          "description": "reject or queue."
+        },
+        "rules": {
+          "name": "Rules",
+          "description": "List of entries with pumps (two numbers) and gap_min; replaces all rules."
+        }
+      }
+    },
+    "get_history": {
+      "name": "Get history",
+      "description": "Returns the history events of the device (or of one pump).",
+      "fields": {
+        "device_id": {
+          "name": "Device",
+          "description": "A pump, or the doser (then set the pump number)."
+        },
+        "pump": {
+          "name": "Pump",
+          "description": "Pump number 1–5, only when the doser itself is selected."
+        },
+        "days": {
+          "name": "Days",
+          "description": "Period 1–60 days."
+        },
+        "kinds": {
+          "name": "Kinds",
+          "description": "e.g. dose, skip, alarm."
+        },
+        "limit": {
+          "name": "Limit",
+          "description": "At most this many events (1–500)."
+        },
+        "offset": {
+          "name": "Offset",
+          "description": "Skip this many events (paging)."
+        }
+      }
+    },
+    "get_daily_history": {
+      "name": "Get daily amounts",
+      "description": "Returns the dosed amount, number of doses and skipped doses per day and pump.",
+      "fields": {
+        "device_id": {
+          "name": "Device",
+          "description": "A pump, or the doser (then set the pump number)."
+        },
+        "pump": {
+          "name": "Pump",
+          "description": "Pump number 1–5, only when the doser itself is selected."
+        },
+        "days": {
+          "name": "Days",
+          "description": "1–60 days."
+        }
+      }
+    }
+  }
+}

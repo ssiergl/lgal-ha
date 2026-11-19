@@ -1,0 +1,222 @@
+# SPDX-FileCopyrightText: 2026 Lars Greiss / LG Aquatic Life
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+dose:
+  fields:
+    device_id: &device
+      required: true
+      selector:
+        device:
+          integration: lg_aquatic_life
+    pump: &pump
+      required: false
+      selector:
+        number: { min: 1, max: 5, mode: box }
+    amount:
+      required: true
+      example: 2.5
+      selector:
+        number: { min: 0.02, max: 10000, step: 0.01, unit_of_measurement: mL, mode: box }
+    speed: &speed
+      required: false
+      selector:
+        select:
+          options: [slow, medium, fast]
+
+stop:
+  fields:
+    device_id: *device
+    pump: *pump
+
+prime:
+  fields:
+    device_id: *device
+    pump: *pump
+    action:
+      required: false
+      default: start
+      selector:
+        select: { options: [start, beat, stop] }
+    duration:
+      required: false
+      example: 10
+      selector:
+        number: { min: 0.5, max: 600, step: 0.5, unit_of_measurement: s, mode: box }
+    speed: *speed
+
+calibrate:
+  fields:
+    device_id: *device
+    pump: *pump
+    action:
+      required: true
+      selector:
+        select: { options: [start, apply, cancel] }
+    amount:
+      required: false
+      selector:
+        number: { min: 0.001, max: 1000, step: 0.01, unit_of_measurement: mL, mode: box }
+    speed: *speed
+
+set_container:
+  fields:
+    device_id: *device
+    pump: *pump
+    capacity:
+      required: false
+      selector:
+        number: { min: 0, max: 100000, step: 1, unit_of_measurement: mL, mode: box }
+    remaining:
+      required: false
+      selector:
+        number: { min: 0, max: 100000, step: 1, unit_of_measurement: mL, mode: box }
+
+refill:
+  fields:
+    device_id: *device
+    pump: *pump
+
+set_tube_hours:
+  fields:
+    device_id: *device
+    pump: *pump
+    hours:
+      required: false
+      default: 0
+      selector:
+        number: { min: 0, max: 100000, step: 1, unit_of_measurement: h, mode: box }
+
+set_schedule:
+  fields:
+    device_id: *device
+    pump: *pump
+    kind:
+      required: false
+      selector:
+        select: { options: [spread, times, none] }
+    amount:
+      required: false
+      selector:
+        number: { min: 0, max: 10000, step: 0.1, unit_of_measurement: mL, mode: box }
+    doses:
+      required: false
+      selector:
+        number: { min: 1, max: 96, mode: box }
+    start:
+      required: false
+      example: "08:00"
+      selector:
+        text:
+    end:
+      required: false
+      example: "20:00"
+      selector:
+        text:
+    times:
+      required: false
+      example: '[{"time": "09:00", "ml": 5}, {"time": "21:30", "ml": 2.5}]'
+      selector:
+        object:
+    days:
+      required: false
+      selector:
+        select: { options: [daily, weekdays, interval] }
+    weekdays:
+      required: false
+      selector:
+        select:
+          multiple: true
+          options: [mon, tue, wed, thu, fri, sat, sun]
+    every:
+      required: false
+      selector:
+        number: { min: 1, max: 30, mode: box }
+    anchor:
+      required: false
+      selector:
+        date:
+    power_loss:
+      required: false
+      selector:
+        select: { options: [skip_missed, catch_up_window] }
+    catch_up_min:
+      required: false
+      selector:
+        number: { min: 0, max: 1440, unit_of_measurement: min, mode: box }
+    schedule:
+      required: false
+      selector:
+        object:
+
+start_boost:
+  fields:
+    device_id: *device
+    pump: *pump
+    amount:
+      required: true
+      selector:
+        number: { min: 0.02, max: 10000, step: 0.1, unit_of_measurement: mL, mode: box }
+    days:
+      required: false
+      selector:
+        number: { min: 1, max: 30, mode: box }
+    doses:
+      required: false
+      selector:
+        number: { min: 1, max: 100, mode: box }
+
+stop_boost:
+  fields:
+    device_id: *device
+    pump: *pump
+
+set_lock_rules:
+  fields:
+    device_id: *device
+    pump: *pump
+    manual:
+      required: false
+      selector:
+        select: { options: [reject, queue] }
+    rules:
+      required: false
+      example: '[{"pumps": [1, 2], "gap_min": 5}]'
+      selector:
+        object:
+
+get_history:
+  fields:
+    device_id: *device
+    pump: *pump
+    days:
+      required: false
+      default: 1
+      selector:
+        number: { min: 1, max: 60, mode: box }
+    kinds:
+      required: false
+      selector:
+        select:
+          multiple: true
+          custom_value: true
+          options: [dose, skip, prime, calib_run, container, calibration, tube, alarm, alarm_end, boost, mode, schedule, settings, locks, system]
+    limit:
+      required: false
+      default: 100
+      selector:
+        number: { min: 1, max: 500, mode: box }
+    offset:
+      required: false
+      default: 0
+      selector:
+        number: { min: 0, max: 100000, mode: box }
+
+get_daily_history:
+  fields:
+    device_id: *device
+    pump: *pump
+    days:
+      required: false
+      default: 14
+      selector:
+        number: { min: 1, max: 60, mode: box }
