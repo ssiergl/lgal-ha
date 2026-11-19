@@ -5,6 +5,7 @@
 from __future__ import annotations
 
 import asyncio
+from unittest.mock import patch
 
 import aiohttp
 import pytest
@@ -323,3 +324,35 @@ async def test_config_flow_unreachable(hass: HomeAssistant, socket_enabled) -> N
     result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "user"})
     result = await hass.config_entries.flow.async_configure(result["flow_id"], {"host": "127.0.0.1:9", "api_key": "lgal_x"})
     assert result["errors"] == {"base": "cannot_connect"}
+
+
+def _zeroconf(vendor: str = "LG Aquatic Life", short_id: str = "1122"):
+    from ipaddress import ip_address
+
+    from homeassistant.helpers.service_info.zeroconf import ZeroconfServiceInfo
+
+    return ZeroconfServiceInfo(
+        ip_address=ip_address("192.0.2.10"), ip_addresses=[ip_address("192.0.2.10")], port=80,
+        hostname=f"lgal-doser-{short_id}.local.", type="_http._tcp.local.",
+        name=f"LGAL Doser {short_id}._http._tcp.local.",
+        properties={"vendor": vendor, "type": "doser", "id": short_id},
+    )
+
+
+async def test_zeroconf_discovery(hass: HomeAssistant) -> None:
+    """A doser announced over mDNS asks for the API key; other vendors and known devices are ignored."""
+    result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "zeroconf"}, data=_zeroconf())
+    assert result["type"] == "form" and result["step_id"] == "zeroconf_confirm"
+    assert result["description_placeholders"]["host"] == "lgal-doser-1122.local"
+
+    result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "zeroconf"}, data=_zeroconf(vendor="Other"))
+    assert result["type"] == "abort" and result["reason"] == "not_lgal"
+
+    # known device added by IP: the new address is taken over
+    entry = MockConfigEntry(domain=DOMAIN, unique_id="aabbcc001122", data={"host": "192.0.2.99", "api_key": "lgal_x"})
+    entry.add_to_hass(hass)
+    with patch.object(hass.config_entries, "async_schedule_reload") as reload:
+        result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "zeroconf"}, data=_zeroconf())
+    assert result["type"] == "abort" and result["reason"] == "already_configured"
+    assert entry.data["host"] == "192.0.2.10"
+    reload.assert_called_once_with(entry.entry_id)

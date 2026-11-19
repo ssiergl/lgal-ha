@@ -147,6 +147,6 @@ def test_card_javascript_parses() -> None:
 
 
 def test_brand_images() -> None:
-    for name in ("icon.png", "icon@2x.png", "logo.png"):
+    for name in ("icon.png", "icon@2x.png", "logo.png", "logo@2x.png"):
         data = (BASE / "brand" / name).read_bytes()
         assert data.startswith(b"\x89PNG"), name

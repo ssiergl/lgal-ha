@@ -1,3 +1,5 @@
+<p align="center"><a href="https://github.com/ssiergl/lgal-brand"><img src="https://raw.githubusercontent.com/ssiergl/lgal-brand/main/logo/lgal-plaque.svg" width="200" alt="LG Aquatic Life"></a></p>
+
 # LG Aquatic Life für Home Assistant
 
 Kurzfassung auf Deutsch. Die vollständige Doku (alle Entitäten, Aktionen, Karten-Optionen) steht in
@@ -16,8 +18,14 @@ Voraussetzung: **Home Assistant 2026.10** oder neuer.
 
 ## Installation
 
-**HACS:** HACS → ⋮ → Benutzerdefinierte Repositories → `https://github.com/ssiergl/lgal-ha`, Typ
-*Integration*. „LG Aquatic Life" installieren, Home Assistant neu starten.
+**Marketplace (Home Assistant 2026.11 und neuer):** **Einstellungen → Marketplace**, oben rechts
+*Add from link* (Hinzufügen per Link), `ssiergl/lgal-ha` (oder `https://github.com/ssiergl/lgal-ha`)
+eingeben, falls gefragt Typ *Integrations* wählen. „LG Aquatic Life" installieren und Home Assistant
+neu starten. Neue Versionen erscheinen danach als Update.
+
+**HACS (Home Assistant 2026.10):** HACS → ⋮ → Benutzerdefinierte Repositories →
+`https://github.com/ssiergl/lgal-ha`, Typ *Integration*; installieren, neu starten. Ab 2026.11 zieht
+HACS von selbst in den Marketplace um.
 
 **Von Hand:** `custom_components/lg_aquatic_life` in den Ordner `custom_components` deiner
 Home-Assistant-Konfiguration kopieren und neu starten.

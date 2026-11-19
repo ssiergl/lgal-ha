@@ -1,3 +1,5 @@
+<p align="center"><a href="https://github.com/ssiergl/lgal-brand"><img src="https://raw.githubusercontent.com/ssiergl/lgal-brand/main/logo/lgal-plaque.svg" width="200" alt="LG Aquatic Life"></a></p>
+
 # LG Aquatic Life for Home Assistant
 
 **Deutsch:** eine Kurzfassung auf Deutsch steht in [README.de.md](README.de.md); diese englische Fassung ist die vollständige Doku.
@@ -29,8 +31,12 @@ Requires **Home Assistant 2026.10** or newer (pumps are child devices of the dos
 
 ## Installation
 
-**HACS:** HACS → ⋮ → Custom repositories → `https://github.com/ssiergl/lgal-ha`, type *Integration*.
-Install "LG Aquatic Life" and restart Home Assistant.
+**Marketplace (Home Assistant 2026.11 and newer):** **Settings → Marketplace → Add from link**, enter
+`ssiergl/lgal-ha` (or `https://github.com/ssiergl/lgal-ha`), type *Integrations* if asked. Install
+"LG Aquatic Life" and restart Home Assistant. New releases then show up as updates.
+
+**HACS (Home Assistant 2026.10):** HACS → ⋮ → Custom repositories → `https://github.com/ssiergl/lgal-ha`,
+type *Integration*; install and restart. From 2026.11 on, HACS moves into the Marketplace by itself.
 
 **By hand:** copy `custom_components/lg_aquatic_life` into the `custom_components` folder of your Home
 Assistant configuration and restart.
