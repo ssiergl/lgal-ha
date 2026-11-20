@@ -5,7 +5,7 @@
 from __future__ import annotations
 
 DOMAIN = "lg_aquatic_life"
-VERSION = "0.1.0"  # keep in sync with manifest.json (cache buster of the cards)
+VERSION = "0.2.0"  # keep in sync with manifest.json (cache buster of the cards)
 
 MANUFACTURER = "LG Aquatic Life"
 VENDOR = "LG Aquatic Life"  # "vendor" in /api/v1/system/info and in the mDNS TXT record

@@ -136,8 +136,14 @@ def test_card_files_exist_and_carry_the_version() -> None:
     for card in CARD_FILES:
         text = (BASE / "frontend" / card).read_text("utf-8")
         assert f'const VERSION = "{VERSION}"' in text
-        for tag in ("lgal-doser-card", "lgal-doser-schedule-card", "lgal-doser-history-card"):
-            assert f'"{tag}"' in text
+        for tag in (
+            "lgal-doser-card", "lgal-doser-manual-card", "lgal-doser-schedule-card", "lgal-doser-boost-card",
+            "lgal-doser-calibration-card", "lgal-doser-pump-settings-card", "lgal-doser-device-card",
+            "lgal-doser-history-card",
+        ):
+            assert f'"{tag}"' in text, tag
+    readme = (BASE.parent.parent / "README.md").read_text("utf-8")
+    assert f"lgal-cards.js?v={VERSION}" in readme, "README: YAML resource with an old version"
 
 
 @pytest.mark.skipif(shutil.which("node") is None, reason="node is not installed")

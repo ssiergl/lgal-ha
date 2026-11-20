@@ -94,6 +94,9 @@ def wait_port(url: str, timeout: float = 120) -> None:
 async def onboard() -> None:
     async with aiohttp.ClientSession() as s:
         async with s.get(f"{HA}/api/onboarding") as r:
+            if r.status == 404:  # onboarding finished: Home Assistant no longer serves the view
+                print("already onboarded")
+                return
             steps = {x["step"]: x["done"] for x in await r.json()}
         if steps.get("user"):
             print("already onboarded")

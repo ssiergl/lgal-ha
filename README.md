@@ -189,44 +189,64 @@ dashboard resources automatically (storage mode). In YAML mode add the resource 
 ```yaml
 lovelace:
   resources:
-    - url: /lg_aquatic_life_static/lgal-cards.js?v=0.1.0
+    - url: /lg_aquatic_life_static/lgal-cards.js?v=0.2.0
       type: module
 ```
 
-All cards have a visual editor and find the doser and its pumps on their own; the texts follow the
-user's language (German or English), the pump colours the light/dark theme.
+All cards have a visual editor and find the doser and its pumps on their own. Colours, surfaces,
+buttons and fields come from your Home Assistant theme; the texts follow the user's language (German
+or English).
 
 ### Doser overview — `custom:lgal-doser-card`
 
-One tile per pump: a bottle with the container level, range, dosed/planned today, the next dose,
-the running dose with progress and a stop button, badges for alarms, warnings, boost and mode. A tap
-opens the pump dialog: **dose now**, **stop**, **prime** (hold the button), mode, **container refilled
-/ size**, **boost** start/stop, and the **calibration wizard** (run → enter measured amount → apply or
-discard).
+One graduated container per pump with the level in %, an ml scale, the amount left, "lasts about
+N days" (yellow/red below the pump's warning and alarm thresholds), today's progress, the next dose
+(highlighted with a boost share), the running dose with progress and a stop button, and small icons
+for alarms, warnings and boost. A tap opens the **pump dialog** with tabs for everything the pump can
+do: **Dose**, **Schedule**, **Boost**, **Calibration**, **Pump** (settings) and **Device**; each tab is
+one of the cards below.
 
 ```yaml
 type: custom:lgal-doser-card
-# device: <doser or pump device id>   # optional; without it the first doser
+# device: <doser or pump device id>   # optional; without it the first doser, a pump device shows only that pump
 # pumps: [1, 2, 3]                    # optional; default: every fitted pump
-# title: Dosing                       # optional; "" hides the title row
+# title: Dosing                       # optional; no title by default
 # show_controls: true                 # false: a tap opens the more-info dialog instead
+# show_scale / show_amount / show_days_left / show_today / show_next: true
+```
+
+### Cards for one pump
+
+Each takes `device: <pump device id>` (or the doser plus `pump: 2`); without either they use the
+first pump of the first doser. Put them side by side in a sections view to build a page per pump.
+
+| Card | What it does |
+|---|---|
+| `custom:lgal-doser-manual-card` | **Manual dosing**: amount, speed, a confirmation before the pump starts, progress and stop; **prime** the tube by holding the button. |
+| `custom:lgal-doser-schedule-card` | **Dosing schedule**: today's doses on a 24 h bar, the wizards *New schedule…*, *Adjust total amount…* and *Change number of doses…*, a summary, the active weekdays (tap to switch a day on or off) and *Edit…* for the full plan (daily amount spread over N doses or up to 24 single times; daily, weekdays or every N days; behaviour after a power cut). Changes stay a draft until *Save schedule*; the device checks the plan against the daily limit, the lock times and the run time of each dose, and a refusal is shown in the card. |
+| `custom:lgal-doser-boost-card` | **Boost**: extra amount over 1–30 days or the next 1–100 doses, with a preview per day or dose; a running boost shows the rest, end and doses left and can be ended. |
+| `custom:lgal-doser-calibration-card` | **Calibration wizard**: prime the tube, hold the outlet into a measuring cup, run the target amount, enter what is in the cup, apply or discard. |
+| `custom:lgal-doser-pump-settings-card` | **Pump settings**: name, mode (automatic / manual only / off), speed, daily limit, container size and content, *Refilled*, warning and alarm thresholds in days, calibration reminder, tube running time and *Tube replaced*, and (when their entities are enabled) direction and anti-drip retract. Every change is applied at once. |
+
+```yaml
+type: custom:lgal-doser-schedule-card
+device: <pump device id>              # or the doser plus "pump: 2"
+# title: KH schedule
 ```
 
 Holding *prime* starts priming and sends a keep-alive while held; the integration keeps the device's
 fast heartbeat. If the browser goes away, priming stops after 1.5 s at the latest (and the device
 itself stops after 500 ms without a heartbeat from Home Assistant).
 
-### Schedule — `custom:lgal-doser-schedule-card`
+### Device — `custom:lgal-doser-device-card`
 
-Today's doses on a 24 h bar with the draft laid over it, and an editor for the plan: daily amount in
-N doses between two times, or single times; daily, weekdays or every N days; behaviour after a power
-cut. Saving sends the plan to the device, which checks it against the daily limit, the lock times and
-the run time of each dose; a refusal is shown under the form.
+Stop all pumps, restart the doser, the status LED's night mode (on/off, from/to, brightness), the
+**lock times** (minimum gap between the doses of two pumps, and whether a manual dose during a lock
+time is rejected or waits) and the firmware version with a link to the update.
 
 ```yaml
-type: custom:lgal-doser-schedule-card
-device: <pump device id>              # or the doser plus "pump: 2"
-# title: KH schedule
+type: custom:lgal-doser-device-card
+# device: <doser device id>           # optional; without it the first doser
 ```
 
 ### History — `custom:lgal-doser-history-card`

@@ -28,7 +28,7 @@
 
 (() => {
 const DOMAIN = "lg_aquatic_life";
-const VERSION = "0.1.0";
+const VERSION = "0.2.0";
 const TIERS = ["slow", "medium", "fast"];
 const MODES = ["auto", "manual_only", "disabled"];
 const WEEKDAYS = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
@@ -546,7 +546,7 @@ class LgalBase extends HTMLElement {
     try {
       await fn();
       this._busy = false;
-      this._note(ok || this.t("done"));
+      if (ok === false) this._render(true); else this._note(ok || this.t("done"));
       return true;
     } catch (err) {
       this._busy = false;
@@ -925,7 +925,8 @@ LgalDoserCard.css = `
   .run .btn { padding: 1px 10px; font-size: 12px; }
   .run-bar { width: 100%; max-width: 150px; }
   .run-bar > i { background: var(--primary-color); }
-  dialog.pumpdlg { width: min(560px, calc(100vw - 24px)); }
+  /* anchored at the top: a centred dialog would jump whenever a tab changes its height */
+  dialog.pumpdlg { width: min(560px, calc(100vw - 24px)); margin: max(12px, 6vh) auto auto; max-height: calc(100vh - max(12px, 6vh) - 12px); }
   .dhead { display: flex; align-items: center; gap: 8px; }
   .dname { font-size: 1.25em; font-weight: 500; }
   #dhead .alert { margin-top: 8px; }
@@ -1263,7 +1264,10 @@ class LgalDoserScheduleCard extends LgalBase {
       const doses = spreadSlots(r, grid);
       return `<div class="hint small">${esc(this._splitLine(r.ml, r.count))}<br>${doses.map((x) => x.time).join(", ")}</div>`;
     }
-    if (this._dialog === "w-count") return `<div class="hint small">${esc(this._splitLine(num(this._draft.ml), r.count))}</div>`;
+    if (this._dialog === "w-count") {
+      const doses = spreadSlots({ ...this._draft, ...r }, grid);
+      return `<div class="hint small">${esc(this._splitLine(num(this._draft.ml), r.count))}<br>${doses.map((x) => x.time).join(", ")}</div>`;
+    }
     return "";
   }
 
@@ -1384,11 +1388,15 @@ class LgalDoserScheduleCard extends LgalBase {
       case "eday": this._toggleDay(v); this._changed(true); return;
       case "edit": this._openDialog("edit"); return;
       case "dclose": this._closeDialog(); return;
-      case "kind":
+      case "kind": {
+        // spread → single times keeps the doses (as the device's own web UI does)
+        const spread = d.kind === "spread" ? spreadSlots(d, grid) : [];
+        if (v === "times" && spread.length && spread.length <= MAX_TIMES) d.times = spread.map((x) => ({ time: x.time, ml: x.ml }));
         d.kind = v;
         if (v === "times" && !d.times.length) d.times = [{ time: "09:00", ml: 1 }];
         this._changed(true);
         return;
+      }
       case "daysmode":
         d.days.mode = v;
         if (v === "weekdays" && d.days.weekdays.length === 7) d.days.weekdays = WEEKDAYS.slice(0, 5);
@@ -1425,7 +1433,7 @@ class LgalDoserScheduleCard extends LgalBase {
           this._dirty = false;
           this._draft = null;
           this._saved = true;
-        }, this.t("saved"));
+        }, false); // the "Saved." badge says it
         return;
       default:
     }

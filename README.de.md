@@ -71,23 +71,27 @@ ist ein Ereignis der Ereignis-Entitäten und ein `lg_aquatic_life_event` auf dem
 ## Karten
 
 ```yaml
-type: custom:lgal-doser-card            # Übersicht aller Pumpen; Tippen öffnet den Pumpendialog:
-                                        # dosieren, stoppen, ansaugen (halten), Behälter, Boost,
-                                        # Kalibrierassistent, Betriebsart
+type: custom:lgal-doser-card            # Übersicht: ein Messzylinder je Pumpe mit Füllstand, ml-Skala,
+                                        # Reichweite, heute und nächster Dosis. Tippen öffnet den
+                                        # Pumpendialog mit den Reitern Dosieren, Zeitplan, Boost,
+                                        # Kalibrierung, Pumpe und Gerät
 ```
 
-```yaml
-type: custom:lgal-doser-schedule-card   # Zeitplan einer Pumpe: 24-h-Balken und Editor
-device: <Pumpengerät>                   # oder der Doser plus "pump: 2"
-```
+Jeder Reiter gibt es auch als eigene Karte für eine Pumpe (`device: <Pumpengerät>` oder der Doser
+plus `pump: 2`), etwa für eine Seite je Pumpe:
 
-```yaml
-type: custom:lgal-doser-history-card    # dosierte ml je Tag und Pumpe (7/14/30/60 Tage)
-days: 14
-```
+| Karte | Inhalt |
+|---|---|
+| `custom:lgal-doser-manual-card` | Manuelle Dosierung (Menge, Geschwindigkeit, Bestätigung, Stopp) und Ansaugen per Halten |
+| `custom:lgal-doser-schedule-card` | Dosierplan: 24-h-Balken, Assistenten (Neuer Zeitplan, Gesamtmenge, Anzahl Dosierungen), Wochentage zum Antippen, Editor (Tagesmenge verteilen oder Einzelzeiten, Tage, Stromausfall), speichern |
+| `custom:lgal-doser-boost-card` | Boost über Tage oder Dosierungen, laufenden Boost beenden |
+| `custom:lgal-doser-calibration-card` | Kalibrier-Assistent Schritt für Schritt |
+| `custom:lgal-doser-pump-settings-card` | Name, Betriebsart, Geschwindigkeit, Tageslimit, Behälter, Schwellen, Erinnerung, Schlauch |
+| `custom:lgal-doser-device-card` | (Doser) Alle stoppen, Neustart, Nachtmodus der Status-LED, Sperrzeiten, Firmware |
+| `custom:lgal-doser-history-card` | dosierte ml je Tag und Pumpe (7/14/30/60 Tage) |
 
-Alle Karten haben einen visuellen Editor, finden Doser und Pumpen selbst und sprechen Deutsch oder
-Englisch je nach Sprache des Benutzers.
+Alle Karten haben einen visuellen Editor, finden Doser und Pumpen selbst, nehmen Farben, Flächen und
+Bedienelemente aus dem Theme und sprechen Deutsch oder Englisch je nach Sprache des Benutzers.
 
 ## REST/WebSocket oder MQTT?
 
